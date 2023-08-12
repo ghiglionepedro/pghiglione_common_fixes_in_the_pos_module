@@ -1,6 +1,6 @@
 {
     'name': "Pos Sales Status Widget on Product",
-    'version': '1.0',
+    'version': '15.0',
     'category': 'Point Of Sale',
     'author': 'Eman',
     'license': 'LGPL-3',
