@@ -39,14 +39,14 @@ class ProductTemplate(models.Model):
 
 	def action_view_pos_sales(self):
 		self.ensure_one()
-		action = self.env.ref('pos_sales_on_product.action_product_pos_sale_list')
+		action = self.env.ref('pghiglione_pos_sales_on_product.action_product_pos_sale_list')
 		product_ids = self.with_context(active_test=False).product_variant_ids.ids
 
 		return {
 			'name': action.name,
 			'help': action.help,
 			'type': action.type,
-			'view_id':self.env.ref('pos_sales_on_product.view_product_pos_order_line_tree').id,
+			'view_id':self.env.ref('pghiglione_pos_sales_on_product.view_product_pos_order_line_tree').id,
 			'view_mode': action.view_mode,
 			'target': action.target,
 			'context': "{'default_product_id': " + str(product_ids[0]) + "}",
