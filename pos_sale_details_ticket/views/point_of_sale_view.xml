@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="pos_daily_report" inherit_id="point_of_sale.report_saledetails">
+        <xpath expr="//t[@t-call='web.internal_layout']" position="replace">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="text-center">
+                        <t t-if="state == 'multiple'">
+                            <h2>Sales Details</h2>
+                        </t>
+                        <t t-else="">
+                            <h2 t-if="state == 'closed' or state == 'opened'">Daily Report</h2>
+                            <t t-if="session_name">
+                                Session ID: <t t-esc="session_name" />
+                            </t>
+                        </t>
+                        <br/>
+                        <t t-if="date_start and date_stop">
+                            <strong><t t-esc="date_start" t-options="{'widget': 'datetime'}"/> - <t t-esc="date_stop" t-options="{'widget': 'datetime'}"/></strong>
+                        </t>
+                    </div>
+
+                    <br/>
+                    <br/>
+
+                    <!-- Orders and Products -->
+                    <t t-if="orders" id="sales">
+                        <h3 id="sales_title">Sales by Ticket</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Order Reference</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="orders" t-as="order">
+                                    <tr>
+                                        <td style="background-color: #dadada;"><t t-esc="order['reference']" /></td>
+                                        <td style="background-color: #dadada;" />
+                                        <td style="background-color: #dadada;" />
+                                        <td style="background-color: #dadada;" />
+                                    </tr>
+                                    <tr t-foreach="order['lines']" t-as="line">
+                                        <td />
+                                        <t t-set="internal_reference" t-value="line['code'] and '[%s] ' % line['code'] or ''" />
+                                        <td><t t-esc="internal_reference" /><t t-esc="line['product_name']" /></td>
+                                        <td>
+                                            <t t-esc="line['quantity']" />
+                                            <t t-if='line["uom"] != "Units"'>
+                                                <t t-esc='line["uom"]' /> 
+                                            </t>
+                                        </td>
+                                        <td>
+                                            <t t-if="currency['position']">
+                                                <t t-esc='line["total_paid"]' t-options="{'widget': 'float', 'precision': currency['precision']}"/><t t-esc='currency["symbol"]' />
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc='currency["symbol"]' /><t t-esc='line["total_paid"]' t-options="{'widget': 'float', 'precision': currency['precision']}"/>
+                                            </t>
+                                            <t t-if='line["discount"] != 0'>
+                                                Disc: <t t-esc='line["discount"]' />%
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td style="background-color: #b1b1b1;"><strong>Total</strong></td>
+                                    <td style="background-color: #b1b1b1;" />
+                                    <td style="background-color: #b1b1b1;">
+                                        <strong><t t-esc="order['total_quantity']" /></strong>
+                                    </td>
+                                    <td style="background-color: #b1b1b1;">
+                                        <strong>
+                                            <t t-if="currency['position']">
+                                                <t t-esc='order["total_amount"]' t-options="{'widget': 'float', 'precision': currency['precision']}"/><t t-esc='currency["symbol"]' />
+                                            </t>
+                                            <t t-else="">
+                                                <t t-esc='currency["symbol"]' /><t t-esc='order["total_amount"]' t-options="{'widget': 'float', 'precision': currency['precision']}"/>
+                                            </t>
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>
