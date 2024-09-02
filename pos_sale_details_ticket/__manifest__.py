@@ -8,7 +8,7 @@
     'description': 'This module customizes the POS Sale Details report to group products by ticket instead of by category.',
     'website': 'http://naolhospital.com',
     'sequence': 7,
-    'depends': ['point_of_sale'],
+    'depends': ['pos_daily_sales_reports'],
     'data': [
         'views/point_of_sale_view.xml'
     ],
