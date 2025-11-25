@@ -7,8 +7,55 @@
         <field name="priority">10</field>
         <field name="arch" type="xml">
             <xpath expr="//footer/button[@name='generate_report']" position="after">
-                 <button name="print_excel_report" string="Print Excel" type="object" class="btn-primary"/>
+                 <button name="print_excel_report" string="Excel" type="object" class="btn-primary"/>
             </xpath>
         </field>
     </record>
+
+    <record model="ir.ui.view" id="point_of_sale_view_pos_details_pdf_wizard_inherit_form">
+        <field name="name">pos.details.wizard.pdf.form.inherit</field>
+        <field name="model">pos.details.wizard</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_details_wizard" />
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <xpath expr="//footer/button[@name='generate_report']" position="after">
+                 <button name="print_pdf_report" string="PDF" type="object" class="btn-primary"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="point_of_sale_view_pos_start_date_wizard_inherit_form">
+        <field name="name">pos.start.date.wizard.form.inherit</field>
+        <field name="model">pos.details.wizard</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_details_wizard" />
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='start_date']" position="attributes">
+                <attribute name="widget">date</attribute>
+		<attribute name="default">context_today()</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="point_of_sale_view_pos_end_date_wizard_inherit_form">
+        <field name="name">pos.end.date.wizard.form.inherit</field>
+        <field name="model">pos.details.wizard</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_details_wizard" />
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='end_date']" position="attributes">
+                <attribute name="widget">date</attribute>
+            	<attribute name="default">context_today()</attribute>
+	    </xpath>
+        </field>
+    </record>
+
+
+
+
+
+
+
+
+
 </odoo>
